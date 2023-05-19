@@ -1,28 +1,32 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="">
+  <div>
+    <video ref="videoObject"></video>
   </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import QrScanner from 'qr-scanner';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  data() {
+    return {
+      qrCodeContent: ''
+    }
+  },
+  mounted() {
+    this.qrScanner = new QrScanner(this.$refs.videoObject, this.handleQrScan, {
+      onDecodeError: (error) => {
+        if (error === 'No QR code found') return;
+      },
+      highlightScanRegion: true,
+      highlightCodeOutline: true,
+      preferredCamera: 'environment'
+    });
+  },
+  methods: {
+        handleQrScan(result) {
+      console.log(result);
+      this.qrCodeContent = result.data;
+    },
+  },
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
