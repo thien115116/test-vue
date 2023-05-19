@@ -4,29 +4,33 @@
   </div>
 </template>
 <script>
-import QrScanner from 'qr-scanner';
+import QrScanner from "qr-scanner";
 
 export default {
   data() {
     return {
-      qrCodeContent: ''
-    }
+      qrCodeContent: "",
+    };
   },
   mounted() {
     this.qrScanner = new QrScanner(this.$refs.videoObject, this.handleQrScan, {
       onDecodeError: (error) => {
-        if (error === 'No QR code found') return;
+        if (error === "No QR code found") return;
       },
       highlightScanRegion: true,
       highlightCodeOutline: true,
-      preferredCamera: 'environment'
+      preferredCamera: "environment",
     });
+
+    setTimeout(() => {
+      this.qrScanner.start();
+    }, 3000);
   },
   methods: {
-        handleQrScan(result) {
+    handleQrScan(result) {
       console.log(result);
       this.qrCodeContent = result.data;
     },
   },
-}
+};
 </script>
