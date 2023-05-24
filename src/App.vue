@@ -1,6 +1,7 @@
 <template lang="">
   <div>
     <video ref="videoObject"></video>
+    <span>{{qrCodeContent}}</span>
   </div>
 </template>
 <script>
